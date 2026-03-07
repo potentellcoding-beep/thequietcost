@@ -88,9 +88,9 @@ details.pattern-item .pattern-example {
 
 .cover-caption {
   text-align: center;
-  margin-top: 0.5rem;
+  margin-top: 1rem; /* move down a row */
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  color: #ffffff; /* brighter for contrast */
 }
 
 /* Modal for sample */
