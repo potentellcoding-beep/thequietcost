@@ -74,6 +74,18 @@ details.pattern-item .pattern-example {
   margin-bottom: 1rem;
 }
 
+/* Cover link behavior */
+.cover-link {
+  display: inline-block;
+}
+.cover-link .book-cover-image {
+  transition: transform 0.2s;
+}
+.cover-link:hover .book-cover-image {
+  cursor: pointer;
+  transform: scale(1.02);
+}
+
 /* Background Effects */
 .background-effects {
   position: fixed;
