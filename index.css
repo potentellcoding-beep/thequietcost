@@ -86,6 +86,13 @@ details.pattern-item .pattern-example {
   transform: scale(1.02);
 }
 
+.cover-caption {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
 /* Background Effects */
 .background-effects {
   position: fixed;
