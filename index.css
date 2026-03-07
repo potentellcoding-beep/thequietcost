@@ -69,6 +69,11 @@ details.pattern-item .pattern-example {
   font-size: 0.9rem;
 }
 
+/* About author section */
+.about-author p {
+  margin-bottom: 1rem;
+}
+
 /* Background Effects */
 .background-effects {
   position: fixed;
