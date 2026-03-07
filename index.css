@@ -52,6 +52,23 @@ details.question-item .answer {
   color: var(--text-secondary);
 }
 
+/* Dropdowns for expose patterns */
+details.pattern-item {
+  margin-bottom: 0.75rem;
+}
+details.pattern-item summary {
+  list-style: none;
+  cursor: pointer;
+}
+details.pattern-item summary::-webkit-details-marker {
+  display: none;
+}
+details.pattern-item .pattern-example {
+  margin-top: 0.4rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
 /* Background Effects */
 .background-effects {
   position: fixed;
