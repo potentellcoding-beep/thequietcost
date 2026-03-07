@@ -18,4 +18,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const elementsToAnimate = document.querySelectorAll(".hidden-initially");
   elementsToAnimate.forEach((el) => observer.observe(el));
+
+  // sample modal functionality
+  const sampleLinks = document.querySelectorAll('.sample-link');
+  const modal = document.getElementById('sample-modal');
+  const modalClose = document.getElementById('modal-close');
+  const sampleFrame = document.getElementById('sample-frame');
+  sampleLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const url = link.getAttribute('href');
+      sampleFrame.setAttribute('src', url);
+      modal.classList.remove('hidden');
+    });
+  });
+  modalClose.addEventListener('click', () => {
+    modal.classList.add('hidden');
+    sampleFrame.setAttribute('src', '');
+  });
+  modal.addEventListener('click', (e) => {
+    if(e.target === modal) {
+      modal.classList.add('hidden');
+      sampleFrame.setAttribute('src', '');
+    }
+  });
 });
