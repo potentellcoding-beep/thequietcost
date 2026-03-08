@@ -274,6 +274,38 @@ h3,
   letter-spacing: 0.05em;
 }
 
+.author-branding {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 0.25rem;
+}
+
+.author-contact a {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.author-contact .social-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.25rem;
+  fill: #fff;
+}
+
+.author-contact .email-link {
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
 .nav-links {
   list-style: none;
   display: flex;
