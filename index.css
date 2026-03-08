@@ -730,6 +730,30 @@ h3,
   font-size: 0.9rem;
 }
 
+/* social links in footer */
+.social-links {
+  margin-top: 1rem;
+}
+
+.social-links a {
+  margin: 0 0.5rem;
+  display: inline-block;
+  vertical-align: middle;
+  color: #fff;
+  text-decoration: none;
+}
+
+.social-icon {
+  width: 24px;
+  height: 24px;
+  fill: #fff;
+}
+
+.email-link {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
 /* Animations */
 .animate-in {
   animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
