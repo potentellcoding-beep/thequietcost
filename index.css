@@ -380,7 +380,8 @@ h3,
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding-top: 100px;
+  /* extra space so hero content isn't hidden under the fixed navbar */
+  padding-top: 140px;
 }
 
 .hero-content {
