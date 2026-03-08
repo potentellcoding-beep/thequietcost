@@ -733,12 +733,14 @@ h3,
 /* social links in footer */
 .social-links {
   margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .social-links a {
-  margin: 0 0.5rem;
+  margin: 0.25rem 0;
   display: inline-block;
-  vertical-align: middle;
   color: #fff;
   text-decoration: none;
 }
@@ -752,6 +754,7 @@ h3,
 .email-link {
   font-size: 0.9rem;
   color: #6b7280;
+  margin-top: 0.5rem;
 }
 
 /* Animations */
