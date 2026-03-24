@@ -60,6 +60,7 @@ async function sendGuideEmail({ email, guideUrl }) {
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
+      "User-Agent": "the-quiet-cost-guide/1.0",
     },
     body: JSON.stringify({
       from,
