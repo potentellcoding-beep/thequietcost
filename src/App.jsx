@@ -50,6 +50,7 @@ function SectionLabel({ children, dark = false }) {
 export default function App() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -61,6 +62,12 @@ export default function App() {
     setSubmitted(true);
     setEmail("");
   };
+
+  const previewHighlights = [
+    "You start seeing the difference between normal co-parenting conflict and a sustained campaign of emotional influence.",
+    "You understand why your child may seem distant, scripted, or suddenly fearful without a clear event to explain it.",
+    "You learn how to respond in ways that protect the bond instead of feeding the pattern.",
+  ];
 
   return (
     <div className="relative overflow-hidden bg-grain text-sand">
@@ -119,11 +126,21 @@ export default function App() {
                   For the parent who knows something is wrong but can&apos;t yet
                   prove it.
                 </div>
-                <img
-                  src={coverImage}
-                  alt="The Quiet Cost book cover"
-                  className="w-full rounded-[1.5rem] object-cover"
-                />
+                <button
+                  type="button"
+                  onClick={() => setIsPreviewOpen(true)}
+                  className="group block w-full text-left"
+                  aria-label="Open book preview"
+                >
+                  <img
+                    src={coverImage}
+                    alt="The Quiet Cost book cover"
+                    className="w-full rounded-[1.5rem] object-cover transition duration-300 group-hover:scale-[1.01]"
+                  />
+                  <span className="mt-4 block text-center text-sm font-bold uppercase tracking-[0.26em] text-fog/80 transition group-hover:text-sand">
+                    Tap the cover to preview the book
+                  </span>
+                </button>
               </div>
             </div>
           </div>
@@ -309,8 +326,98 @@ export default function App() {
             >
               Get the Book
             </a>
+
+            <div className="mt-10 flex items-center justify-center gap-4 text-fog/80">
+              <a
+                href="https://www.instagram.com/kelainewrites/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold uppercase tracking-[0.18em] transition duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10 hover:text-sand"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5 fill-current"
+                >
+                  <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 1.8A3.7 3.7 0 0 0 3.8 7.5v9a3.7 3.7 0 0 0 3.7 3.7h9a3.7 3.7 0 0 0 3.7-3.7v-9a3.7 3.7 0 0 0-3.7-3.7h-9Zm9.45 1.35a1.05 1.05 0 1 1 0 2.1 1.05 1.05 0 0 1 0-2.1ZM12 6.85A5.15 5.15 0 1 1 6.85 12 5.16 5.16 0 0 1 12 6.85Zm0 1.8A3.35 3.35 0 1 0 15.35 12 3.35 3.35 0 0 0 12 8.65Z" />
+                </svg>
+                Follow the Author on Instagram
+              </a>
+            </div>
           </div>
         </section>
+
+        {isPreviewOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 px-4 py-8 backdrop-blur-sm">
+            <div className="relative max-h-[90vh] w-full max-w-4xl overflow-auto rounded-[2rem] border border-white/10 bg-[#171b1f] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.45)] sm:p-10">
+              <button
+                type="button"
+                onClick={() => setIsPreviewOpen(false)}
+                className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-lg text-sand transition hover:bg-white/10"
+                aria-label="Close preview"
+              >
+                ×
+              </button>
+
+              <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
+                <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
+                  <img
+                    src={coverImage}
+                    alt="The Quiet Cost book cover preview"
+                    className="w-full rounded-[1.25rem] object-cover"
+                  />
+                </div>
+
+                <div>
+                  <SectionLabel>Book Preview</SectionLabel>
+                  <h3 className="font-serif text-4xl font-semibold text-sand sm:text-5xl">
+                    Read what the book helps you finally see
+                  </h3>
+                  <p className="mt-5 max-w-2xl text-lg leading-8 text-fog">
+                    This is not abstract theory. It is a direct look at the
+                    patterns, phrases, shifts in behavior, and emotional
+                    pressure that make a parent feel like they are losing their
+                    child in slow motion.
+                  </p>
+
+                  <div className="mt-8 space-y-4">
+                    {previewHighlights.map((item) => (
+                      <div
+                        key={item}
+                        className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5"
+                      >
+                        <p className="text-base leading-7 text-fog">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <blockquote className="mt-8 rounded-[1.75rem] border border-ember/20 bg-ember/10 p-6 font-serif text-2xl leading-9 text-sand">
+                    &quot;A child can love you and still reject you when loyalty
+                    becomes the price of peace.&quot;
+                  </blockquote>
+
+                  <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+                    <a
+                      href={amazonLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center rounded-full bg-ember px-7 py-4 text-base font-bold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#cf5b47] hover:shadow-glow"
+                    >
+                      Get the Book
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => setIsPreviewOpen(false)}
+                      className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-7 py-4 text-base font-bold text-sand transition duration-300 hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/10"
+                    >
+                      Continue Reading the Page
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
