@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import coverImage from "../cover.jpg";
 
 const amazonLink =
