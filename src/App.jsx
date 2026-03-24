@@ -51,16 +51,49 @@ export default function App() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formMessage, setFormMessage] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!email.trim()) {
+      setFormMessage("Enter your email to get the guide.");
       return;
     }
 
-    setSubmitted(true);
-    setEmail("");
+    try {
+      setIsSubmitting(true);
+      setFormMessage("");
+
+      const response = await fetch("/api/lead", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          source: "landing-page-guide-form",
+        }),
+      });
+
+      const payload = await response.json();
+
+      if (!response.ok) {
+        throw new Error(payload.error || "Unable to send the guide.");
+      }
+
+      setSubmitted(true);
+      setFormMessage(payload.message || "The guide has been sent to your inbox.");
+      setEmail("");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Unable to send the guide.";
+      setSubmitted(false);
+      setFormMessage(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const previewHighlights = [
@@ -273,19 +306,21 @@ export default function App() {
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="you@example.com"
+                    disabled={isSubmitting}
                     className="w-full rounded-full border border-[#d8c5b6] bg-white px-6 py-4 text-base text-ink outline-none transition focus:border-rust"
                   />
                 </label>
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="w-full rounded-full bg-ink px-7 py-4 text-base font-bold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#1d2126]"
                 >
-                  Download Free Guide
+                  {isSubmitting ? "Sending Guide..." : "Download Free Guide"}
                 </button>
                 <p className="min-h-[24px] text-sm text-[#5b4940]">
                   {submitted
-                    ? "You're on the list. The guide is on its way."
-                    : "No spam. Just the guide and future resources."}
+                    ? formMessage || "You're on the list. The guide is on its way."
+                    : formMessage || "No spam. Just the guide and future resources."}
                 </p>
               </form>
             </div>
