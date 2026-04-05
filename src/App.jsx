@@ -284,6 +284,10 @@ export default function App() {
             <SectionLabel dark>Free Lead Magnet</SectionLabel>
             <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-end">
               <div>
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-rust">
+                  If your child has changed and you can&apos;t explain why...
+                  start here.
+                </p>
                 <h2 className="font-serif text-4xl font-semibold leading-tight text-ink sm:text-5xl">
                   Free Download
                 </h2>
