@@ -49,7 +49,60 @@ function SectionLabel({ children, dark = false }) {
 }
 
 export default function App() {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formMessage, setFormMessage] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!email.trim()) {
+      setSubmitted(false);
+      setFormMessage("Enter your email to access the guide.");
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      setFormMessage("");
+
+      const response = await fetch("/api/lead", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          source: "landing-page-guide-form",
+        }),
+      });
+
+      const payload = await response.json();
+
+      if (!response.ok) {
+        throw new Error(payload.error || "Unable to save your request.");
+      }
+
+      setSubmitted(true);
+      setFormMessage(
+        payload.message || "Your access has been recorded. Opening the guide...",
+      );
+      setEmail("");
+
+      if (payload.guideUrl) {
+        window.open(payload.guideUrl, "_blank", "noopener,noreferrer");
+      }
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Unable to save your request.";
+      setSubmitted(false);
+      setFormMessage(message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const previewHighlights = [
     "You start seeing the difference between normal co-parenting conflict and a sustained campaign of emotional influence.",
@@ -93,9 +146,7 @@ export default function App() {
                   Get the Book
                 </a>
                 <a
-                  href={guidePdfUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                  href="#free-guide"
                   className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-7 py-4 text-base font-bold text-sand transition duration-300 hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/10"
                 >
                   Read the Free Guide
@@ -233,7 +284,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-5xl px-6 py-24 lg:px-10">
+        <section id="free-guide" className="mx-auto max-w-5xl px-6 py-24 lg:px-10">
           <div className="rounded-[2rem] border border-white/10 bg-[#efe4d2] p-8 text-ink shadow-[0_25px_90px_rgba(0,0,0,0.24)] sm:p-12">
             <SectionLabel dark>Free Guide</SectionLabel>
             <div className="grid gap-8 lg:grid-cols-[1fr_0.85fr] lg:items-center">
@@ -246,26 +297,39 @@ export default function App() {
                   17 Signs Your Child May Be Experiencing Parental Alienation
                 </h2>
                 <p className="mt-5 max-w-2xl text-lg leading-8 text-[#43352f]">
-                  Open the PDF instantly. No email form, no signup flow, and no
-                  backend dependency.
+                  Enter your email to access the PDF instantly. Your request is
+                  recorded, and the guide opens right away.
                 </p>
               </div>
 
-              <div className="flex flex-col gap-4">
-                <a
-                  href={guidePdfUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center rounded-full bg-ink px-7 py-4 text-base font-bold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#1d2126]"
+              <form className="space-y-4" onSubmit={handleSubmit}>
+                <label className="block">
+                  <span className="mb-2 block text-sm font-bold uppercase tracking-[0.2em] text-[#5b4940]">
+                    Email Address
+                  </span>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    placeholder="you@example.com"
+                    disabled={isSubmitting}
+                    className="w-full rounded-full border border-[#d8c5b6] bg-white px-6 py-4 text-base text-ink outline-none transition focus:border-rust"
+                  />
+                </label>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full rounded-full bg-ink px-7 py-4 text-base font-bold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#1d2126]"
                 >
-                  Open the Free PDF
-                </a>
-                <p className="text-sm leading-6 text-[#5b4940]">
-                  This guide is now served as a static file from the site, so
-                  it works without `DATABASE_URL`, Resend, or any CTA email
-                  automation.
+                  {isSubmitting ? "Opening Guide..." : "Get the Free Guide"}
+                </button>
+                <p className="min-h-[24px] text-sm leading-6 text-[#5b4940]">
+                  {submitted
+                    ? formMessage || "Your request has been recorded."
+                    : formMessage ||
+                      "Your email is saved so you can track guide requests."}
                 </p>
-              </div>
+              </form>
             </div>
           </div>
         </section>

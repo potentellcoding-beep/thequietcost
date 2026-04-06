@@ -15,3 +15,14 @@ Requirements:
 - It must remain publicly accessible.
 - Recommended max width: `120px` for email rendering.
 - File size should stay under `200KB`.
+
+## Protected Leads Dashboard
+
+Guide request emails are stored in the `email_leads` table and can be viewed at `/api/leads-dashboard`.
+
+This endpoint is protected with HTTP Basic Auth and requires:
+
+- `ADMIN_USERNAME`
+- `ADMIN_PASSWORD`
+
+Do not expose these credentials publicly. Set them in Vercel before using the dashboard.
